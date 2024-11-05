@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Navbar = styled.nav`
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(8px);
     position: fixed;
     width: 100%;
