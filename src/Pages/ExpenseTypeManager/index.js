@@ -91,7 +91,6 @@ const ExpenseTypeManager = () => {
     const handlePageChange = (newPageIndex) => {
         setPagination((prev) => ({ ...prev, pageIndex: newPageIndex }));
         setIsLoading(true);
-        fetchExpenseTypes();
     };
 
     const handleEdit = (id) => {
