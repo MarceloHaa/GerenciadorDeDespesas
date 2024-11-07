@@ -72,18 +72,13 @@ const CreateExpense = () => {
     const handleCreate = async () => {
         try {
             setIsLoading(true);
-            const selectedExpenseType = expenseTypes.find(
-                (type) => type.id.toString() === newExpense.expenseType
-            );
             const formattedExpense = {
                 description: newExpense.description,
                 amount: newExpense.amount
                     ? parseFloat(newExpense.amount.replace(',', '.'))
                     : 0.0,
                 releaseDate: new Date(newExpense.releaseDate).toISOString(),
-                expenseType: selectedExpenseType
-                    ? selectedExpenseType.name
-                    : '',
+                expenseType: newExpense.expenseType,
             };
 
             const response = await expenseService.create(formattedExpense);
@@ -96,6 +91,7 @@ const CreateExpense = () => {
             setIsLoading(false);
         }
     };
+
     if (isLoading) return <LoadingSpinner />;
 
     return (

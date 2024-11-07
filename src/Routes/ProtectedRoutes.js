@@ -9,11 +9,11 @@ const ProtectedRoutes = ({ children, requireAdmin = false }) => {
     const usuarioAutenticado = userService.usuarioAutenticado();
 
     if (!usuarioAutenticado) {
-        return <Navigate to="/home" replace state={{ from: location }} />;
+        return <Navigate to="/login" replace state={{ from: location }} />;
     }
 
     if (requireAdmin && !userService.isAdmin()) {
-        return <Navigate to="/dashboard" replace />;
+        return <Navigate to="/home" replace />;
     }
 
     return children;

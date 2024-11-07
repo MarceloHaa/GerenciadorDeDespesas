@@ -17,7 +17,7 @@ export default class UserServices {
             (error) => {
                 if (error.response && error.response.status === 401) {
                     localStorage.removeItem('token');
-                    window.location.href = '/';
+                    window.location.href = '/login';
                 }
                 return Promise.reject(error);
             }

@@ -43,14 +43,20 @@ const EditExpense = () => {
                     expenseResponse.isSuccess &&
                     expenseResponse.value
                 ) {
+                    const expenseData = expenseResponse.value;
+                    const selectedExpenseType = typesResponse.value.items.find(
+                        (type) => type.id === expenseData.expenseType
+                    );
+
                     setExpense({
-                        ...expenseResponse.value,
-                        amount: expenseResponse.value.amount
-                            .toFixed(2)
-                            .replace('.', ','),
-                        releaseDate: new Date(expenseResponse.value.releaseDate)
+                        ...expenseData,
+                        amount: expenseData.amount.toFixed(2).replace('.', ','),
+                        releaseDate: new Date(expenseData.releaseDate)
                             .toISOString()
                             .split('T')[0],
+                        expenseType: selectedExpenseType
+                            ? selectedExpenseType.id
+                            : '',
                     });
                 } else {
                     toast.error('Erro ao buscar despesa');
