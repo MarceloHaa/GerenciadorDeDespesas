@@ -14,6 +14,7 @@ export const DashboardContainer = styled.div`
 export const ChartContainer = styled.div`
     background-color: ${(props) => props.theme.secondaryBackground};
     padding: 1.5rem;
+    margin-bottom: 1rem;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -80,7 +81,7 @@ export const SelectContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
     width: 100%;
 
@@ -97,6 +98,8 @@ export const SelectContainer = styled.div`
 
 export const SelectMonth = styled.select`
     padding: 0.5rem;
+    margin-bottom: 2rem;
+    gap: 1rem;
     border: 1px solid ${(props) => props.theme.border};
     border-radius: 4px;
     font-size: 1rem;

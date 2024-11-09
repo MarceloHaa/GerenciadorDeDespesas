@@ -9,7 +9,7 @@ import {
 import Input from '../../Components/Input';
 import Botao from '../../Components/Botao';
 import { validarEmail, validarSenha } from '../../Utils/validadores';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import UserServices from '../../Services/UserService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,6 +26,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState([]);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -34,7 +35,8 @@ const Login = () => {
             const response = await userService.login(form);
             if (response === true) {
                 toast.success('Usuário logado com sucesso!');
-                navigate('/home');
+                const redirectTo = location.state?.from?.pathname || '/home';
+                navigate(redirectTo, { replace: true });
             } else {
                 toast.error(
                     'Erro ao realizar o login. Verifique suas credenciais.'
@@ -42,6 +44,7 @@ const Login = () => {
             }
             setLoading(false);
         } catch (err) {
+            setLoading(false);
             toast.error(`Algo deu errado com o Login: ${err}`);
         }
     };
@@ -86,7 +89,7 @@ const Login = () => {
                 />
                 <SubContainerSign>
                     <p>Não é cadastrado?</p>
-                    <NavLink to="cadastrar">Cadastrar</NavLink>
+                    <NavLink to="/cadastrar">Cadastrar</NavLink>
                 </SubContainerSign>
             </Form>
         </Container>

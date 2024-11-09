@@ -143,7 +143,7 @@ const CreateExpense = () => {
                     >
                         <option value="">Selecione o tipo de despesa</option>
                         {expenseTypes.map((type) => (
-                            <option key={type.id} value={type.id.toString()}>
+                            <option key={type.id} value={type.name.toString()}>
                                 {type.name}
                             </option>
                         ))}

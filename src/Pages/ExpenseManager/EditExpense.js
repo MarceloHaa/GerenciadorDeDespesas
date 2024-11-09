@@ -44,9 +44,6 @@ const EditExpense = () => {
                     expenseResponse.value
                 ) {
                     const expenseData = expenseResponse.value;
-                    const selectedExpenseType = typesResponse.value.items.find(
-                        (type) => type.id === expenseData.expenseType
-                    );
 
                     setExpense({
                         ...expenseData,
@@ -54,13 +51,10 @@ const EditExpense = () => {
                         releaseDate: new Date(expenseData.releaseDate)
                             .toISOString()
                             .split('T')[0],
-                        expenseType: selectedExpenseType
-                            ? selectedExpenseType.id
-                            : '',
+                        expenseType:
+                            expenseData.expenseTypeDetails?.name ||
+                            expenseData.expenseType,
                     });
-                } else {
-                    toast.error('Erro ao buscar despesa');
-                    navigate('/despesas');
                 }
 
                 if (
@@ -69,8 +63,6 @@ const EditExpense = () => {
                     typesResponse.value
                 ) {
                     setExpenseTypes(typesResponse.value.items);
-                } else {
-                    toast.error('Erro ao buscar tipos de despesas');
                 }
             } catch (error) {
                 console.error(`Erro ao conectar com a API: ${error}`);
@@ -173,7 +165,7 @@ const EditExpense = () => {
                     >
                         <option value="">Selecione o tipo de despesa</option>
                         {expenseTypes.map((type) => (
-                            <option key={type.id} value={type.id}>
+                            <option key={type.name} value={type.name}>
                                 {type.name}
                             </option>
                         ))}
