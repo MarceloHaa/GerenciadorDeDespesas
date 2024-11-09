@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ExpenseService from '../../Services/ExpenseService';
 import ExpenseTypeService from '../../Services/ExpenseTypeService';
 import { Calendar, DollarSign, FileText, Tag } from 'lucide-react';
+import LoadingSpinner from '../../Components/Loading/index';
 import {
     PageContainer,
     FormCard,
@@ -17,6 +18,7 @@ import {
 import { toast } from 'react-toastify';
 
 const EditExpense = () => {
+    const [isLoading, setIsLoading] = useState(true);
     const [expense, setExpense] = useState({
         description: '',
         amount: '0,00',
@@ -33,6 +35,7 @@ const EditExpense = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setIsLoading(true);
                 const [expenseResponse, typesResponse] = await Promise.all([
                     expenseService.getById(id),
                     expenseTypeService.getAll(0, 100),
@@ -68,6 +71,8 @@ const EditExpense = () => {
                 console.error(`Erro ao conectar com a API: ${error}`);
                 toast.error(`Erro ao conectar com a API: ${error.message}`);
                 navigate('/');
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -97,6 +102,7 @@ const EditExpense = () => {
 
     const handleUpdate = async () => {
         try {
+            setIsLoading(true);
             const formattedExpense = {
                 ...expense,
                 amount: parseFloat(
@@ -113,8 +119,11 @@ const EditExpense = () => {
             }
         } catch (error) {
             toast.error(`Erro ao conectar com a API: ${error.message}`);
+        } finally {
+            setIsLoading(false);
         }
     };
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <PageContainer>
