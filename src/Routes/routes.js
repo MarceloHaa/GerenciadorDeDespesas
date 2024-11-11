@@ -14,10 +14,10 @@ import EditExpenseType from '../Pages/ExpenseTypeManager/EditExpenseType';
 import CreateExpense from '../Pages/ExpenseManager/CreateExpense';
 import EditExpense from '../Pages/ExpenseManager/EditExpense';
 import ProtectedRoutes from './ProtectedRoutes';
-import Cadastro from '../Pages/Cadastro';
+import Register from '../Pages/Register';
 import Navbar from '../Components/NavBar';
 import UserList from '../Pages/UserList';
-import WelcomePage from '../Pages/BemVindo/index';
+import WelcomePage from '../Pages/Welcome/index';
 import { ThemeProvider } from './../Contexts/ThemeContext';
 
 const Layout = ({ children }) => (
@@ -34,7 +34,7 @@ const Routering = () => {
                 <Routes>
                     <Route path="/" element={<WelcomePage />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/cadastrar" element={<Cadastro />} />
+                    <Route path="/cadastrar" element={<Register />} />
                     <Route
                         path="/home"
                         element={
