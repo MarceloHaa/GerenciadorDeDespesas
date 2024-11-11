@@ -7,7 +7,7 @@ import {
     SubContainerSign,
 } from './styles';
 import Input from '../../Components/Input';
-import Botao from '../../Components/Botao';
+import Botao from '../../Components/Button';
 import { validarEmail, validarSenha } from '../../Utils/validadores';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import UserServices from '../../Services/UserService';

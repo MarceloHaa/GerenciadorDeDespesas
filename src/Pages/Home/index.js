@@ -1,6 +1,6 @@
 import React from 'react';
-import GraphicPizza from '../../Components/Graficos/GraphicPizza';
-import GraphicBar from '../../Components/Graficos/GraphicBar';
+import GraphicPizza from '../../Components/Graphic/GraphicPizza';
+import GraphicBar from '../../Components/Graphic/GraphicBar';
 import { Container, GraphicWrapper } from './styles';
 import { useTheme } from '../../Contexts/ThemeContext';
 

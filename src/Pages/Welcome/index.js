@@ -70,6 +70,7 @@ const WelcomePage = () => {
             <HeroSection style={{ backgroundImage: `url(${backgroundImage})` }}>
                 <HeroContent>
                     <HeroTitle>Bem vindo</HeroTitle>
+
                     <HeroSubtitle>Gerenciador de Despesas</HeroSubtitle>
                 </HeroContent>
             </HeroSection>
