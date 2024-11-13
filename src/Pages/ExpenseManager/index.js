@@ -31,7 +31,6 @@ const ExpenseManager = () => {
     const [expenses, setExpenses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
     const [expenseTypeMap, setExpenseTypeMap] = useState({});
     const [pagination, setPagination] = useState({
         pageIndex: 0,
@@ -100,7 +99,6 @@ const ExpenseManager = () => {
 
     useEffect(() => {
         fetchExpenses();
-        fetchExpenseTypes();
     }, [fetchExpenses, fetchExpenseTypes]);
 
     const handleFilterChange = (e) => {
