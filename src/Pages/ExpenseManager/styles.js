@@ -176,7 +176,7 @@ export const TableRow = styled.tr`
 
 export const TableCell = styled.td`
     width: 100%;
-    padding: 1rem;
+    padding: 0.7rem;
     border-bottom: 1px solid #eee;
     color: #54260a;
     white-space: nowrap;
@@ -190,7 +190,6 @@ export const ButtonGroup = styled.div`
 
 export const Button = styled.button`
     flex: 1;
-    padding: 0.875rem 1.5rem;
     border: none;
     border-radius: 10px;
     font-size: 1rem;
@@ -212,6 +211,9 @@ export const Button = styled.button`
         background-color: #ebbfa4;
         cursor: not-allowed;
     }
+    @media (max-width: 480px) {
+        padding: 0.3rem;
+    }
 `;
 
 export const ActionIcon = styled.button`
@@ -232,7 +234,6 @@ export const ActionIcon = styled.button`
 
 export const FilterContainer = styled.div`
     margin-bottom: 2rem;
-    padding: 1.5rem;
     background-color: ${(props) => props.theme.secondaryBackground};
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -252,7 +253,7 @@ export const FilterContainer = styled.div`
 `;
 
 export const FilterInput = styled.input`
-    padding: 0.875rem 1rem;
+    padding: 0.6rem 0.8rem;
     border: 2px solid #a66b44;
     border-radius: 10px;
     font-size: 1rem;
@@ -261,7 +262,6 @@ export const FilterInput = styled.input`
     transition: all 0.2s ease-in-out;
     flex: 1;
     margin-left: 1rem;
-    margin-right: 1rem;
 
     &:focus {
         outline: none;
@@ -276,13 +276,11 @@ export const FilterInput = styled.input`
 
 export const FilterButton = styled(Button)`
     background-color: #823a0e;
-    padding: 0.875rem 2rem;
     border-radius: 10px;
     font-size: 1rem;
     font-weight: bold;
     color: white;
     flex: 1;
-    margin-left: 0.5rem;
     margin-right: 0.5rem;
 
     &:hover {

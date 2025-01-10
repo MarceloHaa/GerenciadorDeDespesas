@@ -138,10 +138,6 @@ const ExpenseManager = () => {
         setIsLoading(true);
     };
 
-    const handleGoBack = () => {
-        navigate(-1);
-    };
-
     if (isLoading) return <LoadingSpinner />;
     if (error) return <div>Erro: {error}</div>;
 
@@ -181,12 +177,9 @@ const ExpenseManager = () => {
                         placeholder="Nome"
                     />
 
-                    <FilterButton type="button" onClick={handleGoBack}>
-                        Voltar
-                    </FilterButton>
                     <FilterButton type="submit">Filtrar</FilterButton>
                     <Button onClick={() => navigate('/despesas/criar')}>
-                        Criar Nova Despesa
+                        Criar Despesa
                     </Button>
                 </form>
             </FilterContainer>
