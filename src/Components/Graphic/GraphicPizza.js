@@ -147,50 +147,10 @@ const GraphicPizza = () => {
             fetchPizzaData(false);
         }
     };
-<<<<<<< HEAD:src/Components/Graficos/GraphicPizza.js
 
     const isFilterEnabled =
         showDateRange && dateRange.startDate && dateRange.endDate;
 
-=======
-    const renderLegend = (props) => {
-        const { payload } = props;
-        return (
-            <div
-                style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    padding: '10px',
-                    maxWidth: '100%',
-                }}
-            >
-                {payload.map((entry, index) => (
-                    <div
-                        key={`legend-${index}`}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            marginRight: '10px',
-                            fontSize: '12px',
-                        }}
-                    >
-                        <div
-                            style={{
-                                width: '10px',
-                                height: '10px',
-                                backgroundColor: entry.color,
-                                marginRight: '5px',
-                            }}
-                        />
-                        <span>{entry.value}</span>
-                    </div>
-                ))}
-            </div>
-        );
-    };
->>>>>>> 26467702075bbb4e129d60e193fa60c0f0a598c4:src/Components/Graphic/GraphicPizza.js
     return (
         <DashboardContainer $isDarkMode={isDarkMode}>
             <ChartContainer>
@@ -291,11 +251,7 @@ const GraphicPizza = () => {
                 {loading ? (
                     <p>Carregando gráfico de pizza...</p>
                 ) : (
-                    <PieChart
-                        width={400}
-                        height={600}
-                        margin={{ top: 0, right: 0, bottom: 50, left: 0 }}
-                    >
+                    <PieChart width={400} height={400}>
                         <Pie
                             data={pizzaData}
                             dataKey="total"
@@ -312,17 +268,7 @@ const GraphicPizza = () => {
                             ))}
                         </Pie>
                         <Tooltip />
-                        <Legend
-                            content={renderLegend}
-                            verticalAlign="bottom"
-                            align="center"
-                            wrapperStyle={{
-                                position: 'absolute',
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                            }}
-                        />
+                        <Legend />
                     </PieChart>
                 )}
             </ChartContainer>
