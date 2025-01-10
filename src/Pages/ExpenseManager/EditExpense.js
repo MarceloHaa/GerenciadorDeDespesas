@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ExpenseService from '../../Services/ExpenseService';
 import ExpenseTypeService from '../../Services/ExpenseTypeService';
 import { Calendar, DollarSign, FileText, Tag } from 'lucide-react';
+import LoadingSpinner from '../../Components/Loading/index';
 import {
     PageContainer,
     FormCard,
@@ -42,11 +43,34 @@ const EditExpense = () => {
                 ]);
 
                 if (
+<<<<<<< HEAD
+=======
+                    expenseResponse &&
+                    expenseResponse.isSuccess &&
+                    expenseResponse.value
+                ) {
+                    const expenseData = expenseResponse.value;
+
+                    setExpense({
+                        ...expenseData,
+                        amount: expenseData.amount.toFixed(2).replace('.', ','),
+                        releaseDate: new Date(expenseData.releaseDate)
+                            .toISOString()
+                            .split('T')[0],
+                        expenseType:
+                            expenseData.expenseTypeDetails?.name ||
+                            expenseData.expenseType,
+                    });
+                }
+
+                if (
+>>>>>>> 26467702075bbb4e129d60e193fa60c0f0a598c4
                     typesResponse &&
                     typesResponse.isSuccess &&
                     typesResponse.value
                 ) {
                     setExpenseTypes(typesResponse.value.items);
+<<<<<<< HEAD
 
                     if (
                         expenseResponse &&
@@ -78,6 +102,8 @@ const EditExpense = () => {
                     }
                 } else {
                     toast.error('Erro ao buscar tipos de despesas');
+=======
+>>>>>>> 26467702075bbb4e129d60e193fa60c0f0a598c4
                 }
             } catch (error) {
                 console.error(`Erro ao conectar com a API: ${error}`);
@@ -115,10 +141,13 @@ const EditExpense = () => {
     const handleUpdate = async () => {
         try {
             setIsLoading(true);
+<<<<<<< HEAD
             const selectedExpenseType = expenseTypes.find(
                 (type) => type.id.toString() === expense.expenseType.toString()
             );
 
+=======
+>>>>>>> 26467702075bbb4e129d60e193fa60c0f0a598c4
             const formattedExpense = {
                 ...expense,
                 amount: parseFloat(
@@ -143,6 +172,7 @@ const EditExpense = () => {
             setIsLoading(false);
         }
     };
+    if (isLoading) return <LoadingSpinner />;
 
     if (isLoading) return <LoadingSpinner />;
 
@@ -195,7 +225,7 @@ const EditExpense = () => {
                     >
                         <option value="">Selecione o tipo de despesa</option>
                         {expenseTypes.map((type) => (
-                            <option key={type.id} value={type.id}>
+                            <option key={type.name} value={type.name}>
                                 {type.name}
                             </option>
                         ))}

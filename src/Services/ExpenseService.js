@@ -50,10 +50,30 @@ export default class ExpenseService {
                 name,
             },
         });
+        if (data.isSuccess && data.value && data.value.items) {
+            data.value.items = data.value.items.map((item) => ({
+                ...item,
+                expenseTypeDetails: {
+                    id: item.expenseType,
+                    name: item.expenseTypeName,
+                },
+            }));
+        }
+
         return data;
     }
     async getById(id) {
         const { data } = await this.axios.get(`/${id}`);
+        if (data.isSuccess && data.value) {
+            data.value = {
+                ...data.value,
+                expenseTypeDetails: {
+                    id: data.value.expenseType,
+                    name: data.value.expenseTypeName,
+                },
+            };
+        }
+
         return data;
     }
 

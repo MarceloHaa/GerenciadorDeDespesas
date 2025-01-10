@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExpenseService from '../../Services/ExpenseService';
+import ExpenseTypeService from '../../Services/ExpenseTypeService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingSpinner from '../../Components/Loading/index';
@@ -23,12 +24,14 @@ import {
 } from './styles';
 
 const expenseService = new ExpenseService();
+const expenseTypeService = new ExpenseTypeService();
 
 const ExpenseManager = () => {
     const { isDarkMode } = useTheme();
     const [expenses, setExpenses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [expenseTypeMap, setExpenseTypeMap] = useState({});
     const [pagination, setPagination] = useState({
         pageIndex: 0,
         pageSize: 10,
@@ -79,9 +82,24 @@ const ExpenseManager = () => {
         }
     }, [pagination.pageIndex, pagination.pageSize, filters]);
 
+    const fetchExpenseTypes = useCallback(async () => {
+        try {
+            const response = await expenseTypeService.getAll();
+            if (response && response.isSuccess && response.value) {
+                const typesMap = response.value.items.reduce((map, type) => {
+                    map[type.id] = type.name;
+                    return map;
+                }, {});
+                setExpenseTypeMap(typesMap);
+            }
+        } catch (error) {
+            console.error('Erro ao carregar tipos de despesas:', error);
+        }
+    }, []);
+
     useEffect(() => {
         fetchExpenses();
-    }, [fetchExpenses, pagination.pageIndex, pagination.pageSize]);
+    }, [fetchExpenses, fetchExpenseTypes]);
 
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
@@ -192,7 +210,10 @@ const ExpenseManager = () => {
                                     <TableCell>
                                         R$ {expense.amount.toFixed(2)}
                                     </TableCell>
-                                    <TableCell>{expense.expenseType}</TableCell>
+                                    <TableCell>
+                                        {expenseTypeMap[expense.expenseType] ||
+                                            `${expense.expenseType}`}
+                                    </TableCell>
                                     <TableCell>
                                         {(() => {
                                             const localDate = new Date(

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, SubContainerSign } from './styles';
 import Input from '../../Components/Input/index';
-import Botao from '../../Components/Botao/index';
+import Botao from '../../Components/Button/index';
 import {
     validarEmail,
     validarSenha,
@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const userService = new UserService();
 
-const Cadastro = () => {
+const Register = () => {
     const [loading, setLoading] = useState();
     const [form, setForm] = useState([]);
     const navigate = useNavigate();
@@ -103,11 +103,11 @@ const Cadastro = () => {
                 />
                 <SubContainerSign>
                     <p>Já possui conta?</p>
-                    <NavLink to="*">Login</NavLink>
+                    <NavLink to="/login">Login</NavLink>
                 </SubContainerSign>
             </Form>
         </Container>
     );
 };
 
-export default Cadastro;
+export default Register;

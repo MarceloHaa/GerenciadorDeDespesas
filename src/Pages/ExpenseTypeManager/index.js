@@ -90,6 +90,7 @@ const ExpenseTypeManager = () => {
 
     const handlePageChange = (newPageIndex) => {
         setPagination((prev) => ({ ...prev, pageIndex: newPageIndex }));
+        setIsLoading(true);
     };
 
     const handleEdit = (id) => {
