@@ -19,6 +19,7 @@ import Navbar from '../Components/NavBar';
 import UserList from '../Pages/UserList';
 import WelcomePage from '../Pages/BemVindo/index';
 import { ThemeProvider } from './../Contexts/ThemeContext';
+import EditUser from '../Pages/UserList/EditUser';
 
 const Layout = ({ children }) => (
     <>
@@ -111,6 +112,16 @@ const Routering = () => {
                             <ProtectedRoutes requireAdmin={true}>
                                 <Layout>
                                     <UserList />
+                                </Layout>
+                            </ProtectedRoutes>
+                        }
+                    />
+                    <Route
+                        path="/edit-user/:userId"
+                        element={
+                            <ProtectedRoutes requireAdmin={true}>
+                                <Layout>
+                                    <EditUser />
                                 </Layout>
                             </ProtectedRoutes>
                         }

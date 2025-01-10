@@ -14,9 +14,9 @@ class GraphicService {
         });
     }
 
-    async pizzaGraphic(startDate, endDate) {
+    async pizzaGraphic(startDate, endDate, invoiceDay, month) {
         const { data } = await this.axios.get('/PizzaGraphic', {
-            params: { startDate, endDate },
+            params: { startDate, endDate, invoiceDay, month },
         });
 
         if (data.isSuccess) {

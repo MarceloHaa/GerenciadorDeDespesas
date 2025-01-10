@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserAdmin from '../../Services/UserAdmin';
 import {
     Container,
@@ -8,14 +9,17 @@ import {
     Title,
     SearchInput,
     FilterContainer,
+    ActionIcon,
 } from './styles';
 import LoadingSpinner from '../../Components/Loading';
+import { Edit } from 'lucide-react';
 import { useTheme } from '../../Contexts/ThemeContext';
 
 const userAdmin = new UserAdmin();
 
 const UserList = () => {
     const { isDarkMode } = useTheme();
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [pageIndex, setPageIndex] = useState(0);
@@ -44,40 +48,13 @@ const UserList = () => {
                 setUsers(response.value.items);
                 setTotalPages(response.value.totalPages);
             } catch (error) {
-                console.error('Error ao buscar users:', error);
+                console.error('Erro ao buscar usuários:', error);
             } finally {
                 setIsLoading(false);
             }
         };
         fetchUsers();
     }, [pageIndex, pageSize, debouncedFilterText]);
-
-    const handleStatusChange = async (id, currentActive) => {
-        const newStatus = !currentActive;
-
-        try {
-            await userAdmin.updateUserStatus(id, newStatus);
-            const fetchUsers = async () => {
-                try {
-                    setIsLoading(true);
-                    const response = await userAdmin.getUsers({
-                        pageIndex,
-                        pageSize,
-                        name: debouncedFilterText,
-                    });
-                    setUsers(response.value.items);
-                    setTotalPages(response.value.totalPages);
-                } catch (error) {
-                    console.error('Error ao buscar users:', error);
-                } finally {
-                    setIsLoading(false);
-                }
-            };
-            fetchUsers();
-        } catch (error) {
-            console.error('Erro ao modificar status:', error);
-        }
-    };
 
     const handleFilterClick = () => {
         setPageIndex(0);
@@ -103,6 +80,7 @@ const UserList = () => {
                         <th>Nome</th>
                         <th>Email</th>
                         <th>Status</th>
+                        <th>Vencimento</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -112,15 +90,15 @@ const UserList = () => {
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.active ? 'Ativo' : 'Inativo'}</td>
+                            <td>{user.invoiceDay}</td>
                             <td style={{ textAlign: 'center' }}>
-                                <Button
+                                <ActionIcon
                                     onClick={() =>
-                                        handleStatusChange(user.id, user.active)
+                                        navigate(`/edit-user/${user.id}`)
                                     }
-                                    isActive={user.active}
                                 >
-                                    {user.active ? 'Desativar' : 'Ativar'}
-                                </Button>
+                                    <Edit size={20} />
+                                </ActionIcon>
                             </td>
                         </tr>
                     ))}

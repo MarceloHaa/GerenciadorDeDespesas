@@ -9,6 +9,7 @@ import {
     SelectContainer,
     TotalContainer,
     SelectMonth,
+    StyledLabel,
 } from './styles';
 import { useTheme } from '../../Contexts/ThemeContext';
 
@@ -97,33 +98,36 @@ const GraphicBar = () => {
                 </h2>
 
                 <SelectContainer>
-                    <label htmlFor="month-select">Mês:</label>
-                    <SelectMonth
-                        id="month-select"
-                        value={month}
-                        onChange={handleMonthChange}
-                    >
-                        {monthNames.map((name, index) => (
-                            <option key={index} value={index + 1}>
-                                {name}
-                            </option>
-                        ))}
-                    </SelectMonth>
-
-                    <label htmlFor="year-select">Ano:</label>
-                    <SelectMonth
-                        id="year-select"
-                        value={year}
-                        onChange={handleYearChange}
-                    >
-                        {Array.from({ length: 10 }, (_, i) => year - i).map(
-                            (yearOption) => (
-                                <option key={yearOption} value={yearOption}>
-                                    {yearOption}
+                    <StyledLabel>
+                        Mês:
+                        <SelectMonth
+                            id="month-select"
+                            value={month}
+                            onChange={handleMonthChange}
+                        >
+                            {monthNames.map((name, index) => (
+                                <option key={index} value={index + 1}>
+                                    {name}
                                 </option>
-                            )
-                        )}
-                    </SelectMonth>
+                            ))}
+                        </SelectMonth>
+                    </StyledLabel>
+                    <StyledLabel>
+                        Ano:
+                        <SelectMonth
+                            id="year-select"
+                            value={year}
+                            onChange={handleYearChange}
+                        >
+                            {Array.from({ length: 10 }, (_, i) => year - i).map(
+                                (yearOption) => (
+                                    <option key={yearOption} value={yearOption}>
+                                        {yearOption}
+                                    </option>
+                                )
+                            )}
+                        </SelectMonth>
+                    </StyledLabel>
                 </SelectContainer>
                 <ChartContent>
                     {loading ? (

@@ -73,4 +73,25 @@ export default class UserAdmin {
             throw error;
         }
     }
+    async updateUser(id, active, invoiceDay) {
+        try {
+            const response = await this.axios.put(
+                '/update',
+                {
+                    id,
+                    data: {
+                        active,
+                        invoiceDay,
+                    },
+                },
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao atualizar usuário:', error.message);
+            throw error;
+        }
+    }
 }

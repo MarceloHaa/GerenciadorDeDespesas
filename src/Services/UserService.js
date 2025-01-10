@@ -68,6 +68,17 @@ export default class UserServices {
             return null;
         }
     }
+    getInvoiceDay() {
+        const token = localStorage.getItem('token');
+        if (!token) return null;
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return payload.invoiceDay;
+        } catch (error) {
+            console.error('Erro ao decodificar token:', error);
+            return null;
+        }
+    }
 
     async cadastrar(dados) {
         return this.axios.post('/register', dados);

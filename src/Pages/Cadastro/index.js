@@ -28,6 +28,7 @@ const Cadastro = () => {
                 name: form.name,
                 email: form.email,
                 password: form.password,
+                invoiceDay: form.invoiceDay,
             });
             if (data) {
                 const responseLogin = await userService.login({
@@ -76,6 +77,12 @@ const Cadastro = () => {
                     type="email"
                 />
                 <Input
+                    name="invoiceDay"
+                    placeholder="Digite o vencimento da sua fatura"
+                    onChange={handleChange}
+                    type="number"
+                />
+                <Input
                     name="password"
                     placeholder="Digite a sua senha"
                     onChange={handleChange}
@@ -87,6 +94,7 @@ const Cadastro = () => {
                     onChange={handleChange}
                     type="password"
                 />
+
                 <Botao
                     type="submit"
                     text="Efetuar Cadastro!"

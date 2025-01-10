@@ -15,8 +15,10 @@ import {
     Button,
 } from './styles';
 import { toast } from 'react-toastify';
+import LoadingSpinner from '../../Components/Loading/index';
 
 const EditExpense = () => {
+    const [isLoading, setIsLoading] = useState(true);
     const [expense, setExpense] = useState({
         description: '',
         amount: '0,00',
@@ -33,29 +35,11 @@ const EditExpense = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setIsLoading(true);
                 const [expenseResponse, typesResponse] = await Promise.all([
                     expenseService.getById(id),
                     expenseTypeService.getAll(0, 100),
                 ]);
-
-                if (
-                    expenseResponse &&
-                    expenseResponse.isSuccess &&
-                    expenseResponse.value
-                ) {
-                    setExpense({
-                        ...expenseResponse.value,
-                        amount: expenseResponse.value.amount
-                            .toFixed(2)
-                            .replace('.', ','),
-                        releaseDate: new Date(expenseResponse.value.releaseDate)
-                            .toISOString()
-                            .split('T')[0],
-                    });
-                } else {
-                    toast.error('Erro ao buscar despesa');
-                    navigate('/despesas');
-                }
 
                 if (
                     typesResponse &&
@@ -63,6 +47,35 @@ const EditExpense = () => {
                     typesResponse.value
                 ) {
                     setExpenseTypes(typesResponse.value.items);
+
+                    if (
+                        expenseResponse &&
+                        expenseResponse.isSuccess &&
+                        expenseResponse.value
+                    ) {
+                        const expenseTypeId =
+                            typesResponse.value.items.find(
+                                (type) =>
+                                    type.name ===
+                                    expenseResponse.value.expenseType
+                            )?.id || '';
+
+                        setExpense({
+                            ...expenseResponse.value,
+                            amount: expenseResponse.value.amount
+                                .toFixed(2)
+                                .replace('.', ','),
+                            releaseDate: new Date(
+                                expenseResponse.value.releaseDate
+                            )
+                                .toISOString()
+                                .split('T')[0],
+                            expenseType: expenseTypeId.toString(),
+                        });
+                    } else {
+                        toast.error('Erro ao buscar despesa');
+                        navigate('/despesas');
+                    }
                 } else {
                     toast.error('Erro ao buscar tipos de despesas');
                 }
@@ -70,6 +83,8 @@ const EditExpense = () => {
                 console.error(`Erro ao conectar com a API: ${error}`);
                 toast.error(`Erro ao conectar com a API: ${error.message}`);
                 navigate('/');
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -99,11 +114,19 @@ const EditExpense = () => {
 
     const handleUpdate = async () => {
         try {
+            setIsLoading(true);
+            const selectedExpenseType = expenseTypes.find(
+                (type) => type.id.toString() === expense.expenseType.toString()
+            );
+
             const formattedExpense = {
                 ...expense,
                 amount: parseFloat(
                     expense.amount.replace('.', '').replace(',', '.')
                 ),
+                expenseType: selectedExpenseType
+                    ? selectedExpenseType.name
+                    : '',
             };
 
             const response = await expenseService.update(id, formattedExpense);
@@ -114,9 +137,14 @@ const EditExpense = () => {
                 toast.error('Erro ao atualizar despesa');
             }
         } catch (error) {
+            console.error(error);
             toast.error(`Erro ao conectar com a API: ${error.message}`);
+        } finally {
+            setIsLoading(false);
         }
     };
+
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <PageContainer>
@@ -186,7 +214,7 @@ const EditExpense = () => {
                     />
                 </FormGroup>
 
-                <ButtonGroup>
+                <ButtonGroup stacked>
                     <Button onClick={handleUpdate}>Atualizar</Button>
                     <Button
                         variant="danger"
